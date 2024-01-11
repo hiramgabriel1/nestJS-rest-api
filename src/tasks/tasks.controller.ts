@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { TasksService } from './tasks.service';
+import { Controller, Get, Post, Body } from "@nestjs/common";
+import { TasksService } from "./tasks.service";
+import { createTaskDto } from "./dto/task.dto";
 
-@Controller('tasks/data')
+@Controller("tasks/data")
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
@@ -12,10 +13,11 @@ export class TasksController {
   }
 
   @Post()
-  createTask(@Body() newTask: any){
+  createTask(@Body() newTask: createTaskDto) {
     console.log(newTask);
-    
-    return { response: 'guardando' };
-    // this.taskService.createTask();
+
+    return this.taskService.createTask(newTask.title, newTask.description);
+
+    // return { response: 'guardando' };
   }
 }
